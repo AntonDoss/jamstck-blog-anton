@@ -1,12 +1,14 @@
 module.exports = {
   siteMetadata: {
     title: `jamstck-blog`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://www.yourdomain.tld`,
   },
-  plugins: [{
-    resolve: 'gatsby-source-datocms',
-    options: {
-      "apiToken": "cb88c1cf8662921b1ab5136c825667"
-    }
-  }]
+  plugins: [
+    {
+      resolve: "gatsby-source-datocms",
+      options: {
+        apiToken: "552e3ab0ce170664d241ecd0f584d3",
+      },
+    },
+  ],
 };

@@ -1,20 +1,16 @@
 import * as React from "react";
+import { graphql } from "gatsby";
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-};
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-};
+const IndexPage = ({ data: { articles } }) => {
+  const post = articles.nodes[0];
 
-const IndexPage = () => {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>Hello world!</h1>
+    <main>
+      <h1>Hello world!</h1>
+      <p>{post.tag}</p>
+      <p>{post.title}</p>
+      <p>{post.date}</p>
+      {/* <img src={post.image.url}></img> */}
     </main>
   );
 };
@@ -22,3 +18,19 @@ const IndexPage = () => {
 export default IndexPage;
 
 export const Head = () => <title>Home Page</title>;
+
+export const query = graphql`
+  {
+    articles: allDatoCmsArticle {
+      nodes {
+        title
+        id
+        date
+        tag
+        image {
+          url
+        }
+      }
+    }
+  }
+`;
