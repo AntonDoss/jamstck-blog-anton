@@ -1,7 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `jamstck-blog`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: `jamstck-blog Anton Do`,
   },
   plugins: [
     "gatsby-plugin-postcss",
