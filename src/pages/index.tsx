@@ -6,7 +6,6 @@ import Layout from "../components/Layout";
 export default () => (
   <Layout>
     <main className="bg-lightGrey">
-      <h1 className="text-21md font-semibold">Newsroom</h1>
       <StaticQuery
         query={graphql`
           {
@@ -15,17 +14,42 @@ export default () => (
                 slug
                 title
                 id
-                date
                 tag
                 image {
                   url
                 }
+                topics {
+                  topic
+                  slug
+                  id
+                }
+                meta {
+                  publishedAt(formatString: "MMMM D, YYYY")
+                }
+              }
+            }
+            topics: allDatoCmsTopic {
+              nodes {
+                id
+                slug
+                topic
               }
             }
           }
         `}
         render={(data) => (
-          <div className="container mx-auto flex flex-col">
+          <div className="mx-auto mb-6 flex max-w-[366px] flex-col">
+            <div className="mb-8 flex">
+              {data.topics.nodes.map(
+                (topic: { topic: string; slug: string; id: string }) => {
+                  return (
+                    <Link to={`/posts/topics/${topic.slug}`} key={topic.id}>
+                      <p className="mr-3">{topic.topic}</p>
+                    </Link>
+                  );
+                }
+              )}
+            </div>
             <h2 className="text-2xl font-bold md:text-28md lg:text-32xl">
               Latest News
             </h2>
@@ -36,21 +60,25 @@ export default () => (
                 image: { url: string };
                 tag: string;
                 title: string;
-                date: string;
+                meta: { publishedAt: string };
               }) => {
                 return (
                   <Link to={`/posts/${article.slug}`} key={article.id}>
-                    <div className="mb-6 flex flex-col bg-white md:flex-row">
-                      <img className="" src={article.image.url} alt=""></img>
-                      <div>
+                    <div className="mt-3.5 border-solid">
+                      <img
+                        className="rounded-t-xl"
+                        src={article.image.url}
+                        alt=""
+                      ></img>
+                      <div className="flex flex-col justify-between rounded-b-xl bg-white p-6">
                         <p className="label mb-2 text-xs font-bold uppercase text-labelGrey">
                           {article.tag}
                         </p>
-                        <h2 className="text-19sm font-bold leading-[1.125] md:text-21md lg:text-32xl">
+                        <h2 className="mb-2 text-19sm font-bold leading-[1.125] md:text-21md lg:text-32xl">
                           {article.title}
                         </h2>
-                        <p className="label mt-2 text-sm font-semibold text-labelGrey">
-                          {article.date}
+                        <p className="label mb-2 text-sm font-semibold text-labelGrey">
+                          {article.meta.publishedAt}
                         </p>
                       </div>
                     </div>
