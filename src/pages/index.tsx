@@ -39,17 +39,6 @@ export default () => (
         `}
         render={(data) => (
           <div className="mx-auto mb-6 flex max-w-[366px] flex-col">
-            <div className="mb-8 flex">
-              {data.topics.nodes.map(
-                (topic: { topic: string; slug: string; id: string }) => {
-                  return (
-                    <Link to={`/posts/topics/${topic.slug}`} key={topic.id}>
-                      <p className="mr-3">{topic.topic}</p>
-                    </Link>
-                  );
-                }
-              )}
-            </div>
             <h2 className="text-2xl font-bold md:text-28md lg:text-32xl">
               Latest News
             </h2>
