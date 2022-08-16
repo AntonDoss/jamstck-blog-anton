@@ -1,0 +1,13 @@
+.structured-text > p {
+  margin-bottom: 1.4211em;
+}
+.structured-text > h2 {
+  font-size: 21px;
+  line-height: 1.19048;
+  font-weight: 700;
+  letter-spacing: 0.011em;
+  margin-top: 44px;
+  margin-bottom: 16px;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
+}

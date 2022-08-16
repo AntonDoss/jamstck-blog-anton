@@ -2,49 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  font-size: 17px;
-  line-height: 1.47059;
-  font-weight: 400;
-  letter-spacing: -0.022em;
-  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
-  background-color: #fff;
-  color: #1d1d1f;
-  font-style: normal;
-  margin: 0;
-  padding: 0;
-}
+@layer base {
+  html {
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+      "Arial", sans-serif;
+    background-color: #fff;
+    color: #1d1d1f;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+  }
 
-.label {
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
-}
-
-.arrow {
-  box-sizing: border-box;
-  height: 12px;
-  width: 12px;
-  border-style: solid;
-  border-color: black;
-  border-width: 0px 1.5px 1.5px 0px;
-  transform: rotate(45deg);
-  transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1),
-    transform-origin 1s cubic-bezier(0.86, 0, 0.07, 1),
-    -webkit-transform 1s cubic-bezier(0.86, 0, 0.07, 1),
-    -webkit-transform-origin 1s cubic-bezier(0.86, 0, 0.07, 1);
-}
-
-.structured-text > p {
-  margin-bottom: 1.4211em;
-}
-.structured-text > h2 {
-  font-size: 21px;
-  line-height: 1.19048;
-  font-weight: 700;
-  letter-spacing: 0.011em;
-  margin-top: 44px;
-  margin-bottom: 16px;
-  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
+  .label {
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+      "Arial", sans-serif;
+  }
 }

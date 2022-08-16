@@ -9,7 +9,7 @@ export default () => (
       <StaticQuery
         query={graphql`
           {
-            articles: allDatoCmsArticle {
+            articles: allDatoCmsArticle(limit: 2) {
               nodes {
                 slug
                 title
@@ -26,13 +26,6 @@ export default () => (
                 meta {
                   publishedAt(formatString: "MMMM D, YYYY")
                 }
-              }
-            }
-            topics: allDatoCmsTopic {
-              nodes {
-                id
-                slug
-                topic
               }
             }
           }

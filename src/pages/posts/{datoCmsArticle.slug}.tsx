@@ -3,6 +3,8 @@ import { graphql, Link } from "gatsby";
 import { StructuredText } from "react-datocms";
 import { GatsbyImage } from "gatsby-plugin-image";
 
+import "../../styles/article.css";
+
 import Layout from "../../components/Layout";
 
 export default function Post({ data: { post, articles } }: any) {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { graphql, Link, StaticQuery } from "gatsby";
 
+import "../styles/header.css";
+
 const Header = () => {
   const [isToggled, setIsToggled] = useState(false);
   const toggleMenu = () => {
