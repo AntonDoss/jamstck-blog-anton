@@ -8,12 +8,16 @@ module.exports = {
       colors: {
         lightGrey: "#f5f5f7",
         labelGrey: "#6e6e73",
+        darkGrey: "#161617",
       },
       fontSize: {
         "32xl": "32px",
         "21md": "21px",
         "28md": "28px",
         "19sm": "19px",
+      },
+      spacing: {
+        26: "104px",
       },
       // container: {
       //   screens: {

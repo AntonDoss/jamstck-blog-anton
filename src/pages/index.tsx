@@ -1,16 +1,15 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Layout from "../components/Layout";
 
-export default function Index({ data: { articles, articlesPerPage } }: any) {
-  const articlesOnPage = articlesPerPage.entityPayload.attributes.number;
-  const [allArticles] = useState(articles.nodes);
-  const [pagination, setPagination] = useState(Array);
-  const [loaded, setLoaded] = useState(false);
-  const [limit] = useState(articlesOnPage);
-  const [pages] = useState(Math.ceil(allArticles.length / limit));
+export default function Index({
+  data: { articles, articlesPerPage, featured },
+}: any) {
+  const articlesOnPage = articlesPerPage.number;
+  const allArticles = articles.nodes;
+  const pages = Math.ceil(allArticles.length / articlesOnPage);
   const [currentPage, setCurrentPage] = useState(1);
 
   const goToNextPage = () => {
@@ -21,59 +20,36 @@ export default function Index({ data: { articles, articlesPerPage } }: any) {
     setCurrentPage((page) => page - 1);
   };
 
-  const changePage = (event: any) => {
-    const pageNumber = Number(event.target.textContent);
-    setCurrentPage(pageNumber);
-  };
-
-  useEffect(() => {
-    let pagesNumber = [...Array(Math.ceil(articles.totalCount / limit))].map(
-      (_, i) => i + 1
-    );
-    console.log(articlesOnPage);
-
-    setPagination(pagesNumber);
-    setLoaded(true);
-  }, [allArticles, limit]);
-
   const getPaginatedArticles = () => {
-    const startIndex = currentPage * limit - limit;
-    const endIndex = startIndex + limit;
+    const startIndex = currentPage * articlesOnPage - articlesOnPage;
+    const endIndex = startIndex + articlesOnPage;
     return allArticles.slice(startIndex, endIndex);
-  };
-
-  const getPaginationGroup = () => {
-    let start = Math.floor((currentPage - 1) / limit) * limit;
-    let end = start + limit;
-
-    return pagination.slice(start, end + 1);
   };
 
   return (
     <Layout>
       <main className="bg-lightGrey">
-        <div className="mx-auto mb-6 max-w-[366px] md:max-w-[692px]">
+        <div className="mx-auto mb-6 max-w-[366px] pb-10 md:max-w-[692px]">
           <h2 className="mb-4 text-2xl font-bold md:text-28md lg:text-32xl">
             Latest News
           </h2>
           <div className="flex flex-col">
             {getPaginatedArticles().map(
-              (
-                article: {
-                  slug: string;
-                  id: string;
-                  image: { url: string };
-                  tag: string;
-                  title: string;
-                  meta: { publishedAt: string };
-                },
-                index: number
-              ) => {
+              (article: {
+                slug: string;
+                id: string;
+                image: { url: string };
+                tag: string;
+                title: string;
+                meta: { publishedAt: string };
+              }) => {
                 return (
                   <Link to={`/posts/${article.slug}`} key={article.id}>
                     <div className="mt-4 flex flex-col overflow-hidden rounded-xl">
-                      <img className="" src={article.image.url} alt=""></img>
-                      <div className="flex flex-col justify-between bg-white p-6">
+                      <div className="h-52">
+                        <img className="" src={article.image.url} alt=""></img>
+                      </div>
+                      <div className="flex max-h-[167px] flex-col justify-between bg-white p-6">
                         <p className="label mb-2 text-xs font-bold uppercase text-labelGrey">
                           {article.tag}
                         </p>
@@ -90,40 +66,56 @@ export default function Index({ data: { articles, articlesPerPage } }: any) {
               }
             )}
           </div>
-          <div className="flex justify-between">
+          <div className="mt-6 flex justify-between">
             <button
               onClick={goToPreviousPage}
               className={currentPage === 1 ? "prev disabled" : "prev"}
             >
-              Prev
+              ←
             </button>
-
             <p>
               {currentPage} of {pages}
             </p>
-
-            {/* {loaded &&
-              getPaginationGroup().map((pageNumber: any, index) => {
-                return (
-                  <div key={index}>
-                    <button
-                      onClick={changePage}
-                      className={
-                        currentPage === pageNumber ? "active font-bold" : ""
-                      }
-                    >
-                      {pageNumber}
-                    </button>
-                  </div>
-                );
-              })} */}
-
             <button
               onClick={goToNextPage}
-              className={currentPage === pages ? "next disabled" : "next"}
+              className={currentPage === 1 ? "next disabled" : "next"}
             >
-              Next
+              →
             </button>
+          </div>
+        </div>
+        <div className="container overflow-hidden bg-darkGrey py-10 text-white">
+          <h2 className="mb-4 ml-[104px] text-2xl font-bold md:text-28md lg:text-32xl">
+            Featured Stories
+          </h2>
+          <div className="no-scrollbar flex overflow-hidden overflow-x-scroll px-26">
+            {featured.nodes[0].posts.map(
+              (post: {
+                id: string;
+                image: { url: string };
+                slug: string;
+                title: string;
+                meta: { publishedAt: string };
+              }) => {
+                return (
+                  <Link to={`/posts/${post.slug}`} key={post.id}>
+                    <div className="mt-4 mr-3 flex w-[366px] flex-col overflow-hidden rounded-xl">
+                      <div className="h-52">
+                        <img className="" src={post.image.url} alt=""></img>
+                      </div>
+                      <div className="flex max-h-[167px] flex-col justify-between p-6">
+                        <h2 className="mb-2 text-19sm font-bold leading-[1.125] md:text-21md lg:text-32xl">
+                          {post.title}
+                        </h2>
+                        <p className="label mb-2 text-sm font-semibold">
+                          {post.meta.publishedAt}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              }
+            )}
           </div>
         </div>
       </main>
@@ -138,7 +130,6 @@ export const query = graphql`
         slug
         title
         id
-        tag
         image {
           url
         }
@@ -154,9 +145,20 @@ export const query = graphql`
       totalCount
     }
     articlesPerPage: datoCmsArticlesPerPage {
-      entityPayload {
-        attributes {
-          number
+      number
+    }
+    featured: allDatoCmsFeatured {
+      nodes {
+        posts {
+          title
+          slug
+          image {
+            url
+          }
+          id
+          meta {
+            publishedAt(formatString: "MMMM D, YYYY")
+          }
         }
       }
     }

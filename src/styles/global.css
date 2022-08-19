@@ -21,4 +21,8 @@
     font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
       "Arial", sans-serif;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
